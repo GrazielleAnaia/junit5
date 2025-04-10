@@ -31,6 +31,7 @@ public class CustomerService {
     public CustomerResponseDTO createCustomer(CustomerRequestDTO customerRequestDTO) {
         try {
             notNull(customerRequestDTO, "Customer data is mandatory");
+
             CustomerEntity entity = saveCustomer(customerConverter.convertToCustomerEntity(customerRequestDTO));
             return customerMapper.convertToCustomerResponseDTO(entity);
         } catch (Exception e) {
@@ -61,7 +62,7 @@ public class CustomerService {
     public void deleteCustomerByEmail(String email) {
         try {
             CustomerEntity entity = customerRepository.findByEmail(email);
-            customerRepository.delete(entity);
+            customerRepository.deleteByEmail(email);
         } catch (ResourceNotFoundException e) {
             throw new ResourceNotFoundException("Customer not found", e);
 
